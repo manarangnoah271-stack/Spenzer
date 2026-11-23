@@ -88,15 +88,6 @@
             font-size: clamp(1.35rem, 4.2vw, 1.7rem);
         }
 
-        /* Hide horizontal scrollbar on mobile song pills while keeping smooth scroll */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
         /* Custom Scrollbar for Letter & Modal */
         .letter-scroll::-webkit-scrollbar {
             width: 5px;
@@ -317,19 +308,16 @@
             </section>
 
             <!-- ========================================== -->
-            <!-- CARD 2: OUR SONG (YOUTUBE + VINYL PLAYER)  -->
+            <!-- CARD 2: OUR SONG (USER YOUTUBE LINK)       -->
             <!-- ========================================== -->
             <section id="card2" class="card-stage card-hidden w-full">
                 <div class="bg-cream-50/95 backdrop-blur-xl rounded-3xl p-5 sm:p-8 border border-blush-200/80 shadow-[0_20px_50px_rgba(244,93,132,0.12)] text-center relative overflow-hidden">
                     <div class="flex items-center justify-center gap-2 mb-1.5">
                         <span class="inline-block px-3 py-1 rounded-full bg-gold-300/30 text-gold-500 text-[11px] font-bold tracking-wider uppercase">Chapter II</span>
-                        <span id="audioSourcePill" class="inline-block px-2.5 py-1 rounded-full bg-blush-100 text-blush-600 text-[10px] font-bold tracking-wider uppercase">YouTube Audio</span>
+                        <span id="audioSourcePill" class="inline-block px-2.5 py-1 rounded-full bg-blush-100 text-blush-600 text-[10px] font-bold tracking-wider uppercase">YouTube Ready</span>
                     </div>
                     <h2 class="font-serif fluid-heading font-bold text-stone-800 mb-1">Our Song</h2>
-                    <p class="text-xs sm:text-sm text-stone-500 mb-3.5">Pick a song below or paste any YouTube link</p>
-
-                    <!-- Responsive Horizontal-Scrollable Song Pills on Mobile / Wrap on Desktop -->
-                    <div id="presetSongBar" class="no-scrollbar flex sm:flex-wrap items-center sm:justify-center gap-1.5 overflow-x-auto snap-x pb-1 mb-4 px-1"></div>
+                    <p class="text-xs sm:text-sm text-stone-500 mb-4">Add your own YouTube link to play your special song</p>
 
                     <!-- Vinyl Record & Tonearm Stage -->
                     <div class="relative w-40 h-40 sm:w-48 sm:h-48 mx-auto mb-3.5 flex items-center justify-center">
@@ -356,9 +344,9 @@
 
                     <!-- Song Title & Artist -->
                     <div class="mb-3 px-2">
-                        <h3 id="songTitleDisplay" class="font-serif text-xl sm:text-2xl font-bold text-stone-800 leading-tight truncate">Come Inside Of My Heart</h3>
-                        <p id="songArtistDisplay" class="text-xs sm:text-sm font-medium text-blush-500 mt-0.5 truncate">IV OF SPADES • YouTube Edition</p>
-                        <p id="playbackStatusText" class="text-[11px] text-stone-400 mt-0.5">Tap play to stream from YouTube</p>
+                        <h3 id="songTitleDisplay" class="font-serif text-xl sm:text-2xl font-bold text-stone-800 leading-tight truncate">Your Special Song</h3>
+                        <p id="songArtistDisplay" class="text-xs sm:text-sm font-medium text-blush-500 mt-0.5 truncate">Tap "+ YouTube Link" to add a song</p>
+                        <p id="playbackStatusText" class="text-[11px] text-stone-400 mt-0.5">No YouTube link added yet</p>
                     </div>
 
                     <!-- Hidden YouTube Player Host -->
@@ -379,8 +367,8 @@
                             <i id="pauseIcon" data-lucide="pause" class="w-5 h-5 fill-current hidden"></i>
                         </button>
 
-                        <!-- Change Song Button -->
-                        <button onclick="openCustomizeModal('song')" class="px-3.5 py-2 rounded-full bg-white hover:bg-blush-50 border border-blush-200 text-blush-600 text-xs font-semibold shadow-sm transition-all active:scale-95 shrink-0" title="Paste any YouTube URL or change song">
+                        <!-- Add / Change YouTube Link Button -->
+                        <button onclick="openCustomizeModal('song')" class="px-3.5 py-2 rounded-full bg-white hover:bg-blush-50 border border-blush-200 text-blush-600 text-xs font-semibold shadow-sm transition-all active:scale-95 shrink-0" title="Paste any YouTube URL">
                             + YouTube Link
                         </button>
 
@@ -395,7 +383,7 @@
                     <!-- Personal Song Dedication Note -->
                     <div class="bg-white/85 rounded-2xl p-3 sm:p-3.5 border border-blush-200/70 max-w-sm mx-auto">
                         <p id="songNoteDisplay" class="text-xs sm:text-sm text-stone-600 italic leading-relaxed">
-                            "Come inside of my heart, if you're looking for answers... Every lyric reminds me of how safe and happy I feel with you."
+                            "Every time this song plays, it reminds me of my favorite moments with you."
                         </p>
                     </div>
 
@@ -529,39 +517,28 @@
                     <input type="text" id="inputSignOff" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-blush-200 focus:outline-none focus:border-blush-400 text-stone-800" placeholder="e.g., Forever yours ❤️">
                 </div>
 
-                <!-- Song Preset Dropdown + YouTube URL Input -->
+                <!-- User's Own YouTube Link & Song Details -->
                 <div class="p-3.5 rounded-2xl bg-white border border-blush-200/80 space-y-3">
                     <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-blush-600 mb-1">Card 2: Choose a Preset Song</label>
-                        <select id="presetSongSelect" onchange="applyPresetSongFromSelect()" class="w-full px-3 py-2.5 rounded-xl bg-blush-50/70 border border-blush-200 focus:outline-none focus:border-blush-400 text-stone-800 text-xs font-medium">
-                            <option value="0">IV OF SPADES — Come Inside Of My Heart</option>
-                            <option value="1">Eraserheads — Huwag Kang Matakot</option>
-                            <option value="2">Up Dharma Down — Tadhana</option>
-                            <option value="3">SunKissed Lola — Pasilyo</option>
-                            <option value="custom">Custom YouTube Link / Song</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-1">YouTube Video Link or Video ID</label>
-                        <input type="text" id="inputYoutubeUrl" oninput="document.getElementById('presetSongSelect').value='custom'" class="w-full px-3.5 py-2.5 rounded-xl bg-blush-50/40 border border-blush-200 focus:outline-none focus:border-blush-400 text-stone-800 text-xs" placeholder="https://www.youtube.com/watch?v=... or Video ID">
-                        <p class="text-[11px] text-stone-400 mt-1">Paste any YouTube song link to play it on the vinyl player.</p>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-blush-600 mb-1">Card 2: Paste YouTube Video Link or Video ID</label>
+                        <input type="text" id="inputYoutubeUrl" class="w-full px-3.5 py-2.5 rounded-xl bg-blush-50/40 border border-blush-200 focus:outline-none focus:border-blush-400 text-stone-800 text-xs" placeholder="https://www.youtube.com/watch?v=... or Video ID">
+                        <p class="text-[11px] text-stone-400 mt-1">Paste any YouTube song link you want to play on the vinyl player.</p>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                         <div>
                             <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-1">Song Title</label>
-                            <input type="text" id="inputSongTitle" class="w-full px-3 py-2 rounded-xl bg-white border border-blush-200 focus:outline-none focus:border-blush-400 text-stone-800 text-xs">
+                            <input type="text" id="inputSongTitle" class="w-full px-3 py-2 rounded-xl bg-white border border-blush-200 focus:outline-none focus:border-blush-400 text-stone-800 text-xs" placeholder="e.g., Our Favorite Song">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-1">Artist / Subtitle</label>
-                            <input type="text" id="inputSongArtist" class="w-full px-3 py-2 rounded-xl bg-white border border-blush-200 focus:outline-none focus:border-blush-400 text-stone-800 text-xs">
+                            <input type="text" id="inputSongArtist" class="w-full px-3 py-2 rounded-xl bg-white border border-blush-200 focus:outline-none focus:border-blush-400 text-stone-800 text-xs" placeholder="e.g., Artist Name">
                         </div>
                     </div>
 
                     <div>
                         <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-1">Song Dedication Note</label>
-                        <textarea id="inputSongNote" rows="2" class="w-full px-3 py-2 rounded-xl bg-white border border-blush-200 focus:outline-none focus:border-blush-400 text-stone-800 text-xs"></textarea>
+                        <textarea id="inputSongNote" rows="2" class="w-full px-3 py-2 rounded-xl bg-white border border-blush-200 focus:outline-none focus:border-blush-400 text-stone-800 text-xs" placeholder="Write why this song reminds you of them..."></textarea>
                     </div>
                 </div>
 
@@ -571,7 +548,7 @@
                         <input type="file" id="inputAudioFile" accept="audio/*" onchange="handleAudioUpload(event)" class="w-full text-xs text-stone-600 file:mr-3 file:py-2 file:px-3.5 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-blush-100 file:text-blush-600 hover:file:bg-blush-200 cursor-pointer">
                         <button type="button" id="clearAudioBtn" onclick="clearCustomAudio()" class="hidden px-3 py-2 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 text-[11px] font-medium shrink-0">Use YouTube</button>
                     </div>
-                    <p id="audioUploadStatus" class="text-[11px] text-stone-400 mt-1">Streaming directly from YouTube.</p>
+                    <p id="audioUploadStatus" class="text-[11px] text-stone-400 mt-1">Plays your pasted YouTube link when set.</p>
                 </div>
 
                 <div>
@@ -599,47 +576,16 @@
         lucide.createIcons();
 
         // ==========================================
-        // 1. STATE, PRESET SONGS & BLANK NAME DEFAULT
+        // 1. STATE & BLANK DEFAULTS (USER-CUSTOMIZED)
         // ==========================================
-        const presetSongs = [
-            {
-                shortLabel: "Come Inside Of My Heart",
-                songTitle: "Come Inside Of My Heart",
-                songArtist: "IV OF SPADES • YouTube Edition",
-                youtubeId: "izVXgdiTcQ8",
-                songNote: "\"Come inside of my heart, if you're looking for answers... Every lyric reminds me of how safe and happy I feel with you.\""
-            },
-            {
-                shortLabel: "Huwag Kang Matakot",
-                songTitle: "Huwag Kang Matakot",
-                songArtist: "Eraserheads • YouTube Edition",
-                youtubeId: "9g229n_9_E4",
-                songNote: "\"Huwag kang matakot, 'di mo ba alam nandito lang ako sa iyong tabi... No matter what happens, you never have to face anything alone.\""
-            },
-            {
-                shortLabel: "Tadhana",
-                songTitle: "Tadhana",
-                songArtist: "Up Dharma Down • YouTube Edition",
-                youtubeId: "7S5k9v3m2i8",
-                songNote: "\"Sa hindi inaasahang pagtatagpo ng mga mundo... Meeting you will always be my favorite plot twist.\""
-            },
-            {
-                shortLabel: "Pasilyo",
-                songTitle: "Pasilyo",
-                songArtist: "SunKissed Lola • YouTube Edition",
-                youtubeId: "2v4y6v4q3u0",
-                songNote: "\"Ikaw at ikaw pa rin ang pipiliin ko sa bawat araw at sa bawat habambuhay.\""
-            }
-        ];
-
         const defaultData = {
             recipient: "",
             letter: "From the very moment you walked into my life, everything became brighter, warmer, and infinitely sweeter.\n\nYou are my favorite notification, my safe place after a long day, and the reason I find myself smiling for no reason at all. Thank you for being your wonderful, kind, and unforgettable self.",
             signOff: "Forever yours ❤️",
-            songTitle: presetSongs[0].songTitle,
-            songArtist: presetSongs[0].songArtist,
-            youtubeId: presetSongs[0].youtubeId,
-            songNote: presetSongs[0].songNote,
+            songTitle: "",
+            songArtist: "",
+            youtubeId: "",
+            songNote: "\"Every time this song plays, it reminds me of my favorite moments with you.\"",
             finalQuestion: "Can I be your companion forever?"
         };
 
@@ -676,71 +622,19 @@
 
         function loadSavedData() {
             try {
-                const saved = localStorage.getItem('loveAppCustomData_v3');
+                const saved = localStorage.getItem('loveAppCustomData_v4');
                 if (saved) {
                     appData = { ...defaultData, ...JSON.parse(saved) };
                 }
             } catch (e) {}
-            renderPresetSongButtons();
             applyDataToUI();
             initSwipeAndKeyboardNav();
-        }
-
-        function renderPresetSongButtons() {
-            const bar = document.getElementById('presetSongBar');
-            if (!bar) return;
-            bar.innerHTML = '';
-            presetSongs.forEach((song, idx) => {
-                const isSelected = appData.youtubeId === song.youtubeId;
-                const btn = document.createElement('button');
-                btn.type = 'button';
-                btn.onclick = () => selectPresetSong(idx);
-                btn.className = isSelected
-                    ? 'snap-start shrink-0 px-3 py-1.5 rounded-full bg-blush-500 text-white text-[11px] font-semibold shadow-xs transition-all active:scale-95'
-                    : 'snap-start shrink-0 px-3 py-1.5 rounded-full bg-white/90 hover:bg-blush-100 text-stone-600 border border-blush-200 text-[11px] font-medium transition-all active:scale-95';
-                btn.textContent = `♪ ${song.shortLabel}`;
-                bar.appendChild(btn);
-            });
-        }
-
-        function selectPresetSong(idx) {
-            const chosen = presetSongs[idx];
-            if (!chosen) return;
-
-            if (customAudioElement) {
-                clearCustomAudio();
-            }
-
-            const wasPlaying = isPlaying;
-            stopMusicVisualsAndTimer(false);
-
-            appData.songTitle = chosen.songTitle;
-            appData.songArtist = chosen.songArtist;
-            appData.youtubeId = chosen.youtubeId;
-            appData.songNote = chosen.songNote;
-
-            try {
-                localStorage.setItem('loveAppCustomData_v3', JSON.stringify(appData));
-            } catch (e) {}
-
-            renderPresetSongButtons();
-            applyDataToUI();
-
-            if (ytPlayer && ytPlayerReady && typeof ytPlayer.cueVideoById === 'function') {
-                if (wasPlaying) {
-                    ytPlayer.loadVideoById(appData.youtubeId);
-                    setPlayingVisualState();
-                } else {
-                    ytPlayer.cueVideoById(appData.youtubeId);
-                }
-            } else if (wasPlaying) {
-                toggleMusic();
-            }
         }
 
         function applyDataToUI() {
             const cleanName = (appData.recipient || "").trim();
             const hasName = cleanName.length > 0;
+            const hasYt = Boolean((appData.youtubeId || "").trim());
 
             document.getElementById('headerRecipient').textContent = hasName ? cleanName : "Your Name";
             document.getElementById('letterSalutation').textContent = hasName ? `Dearest ${cleanName},` : "Dearest __________,";
@@ -751,8 +645,18 @@
 
             document.getElementById('letterTextDisplay').textContent = appData.letter;
             document.getElementById('letterSignOff').textContent = appData.signOff;
-            document.getElementById('songTitleDisplay').textContent = appData.songTitle;
-            document.getElementById('songArtistDisplay').textContent = appData.songArtist;
+
+            document.getElementById('songTitleDisplay').textContent = (appData.songTitle || "").trim() || "Your Special Song";
+            document.getElementById('songArtistDisplay').textContent = (appData.songArtist || "").trim()
+                || (hasYt ? "YouTube Link Connected" : "Tap \"+ YouTube Link\" to add a song");
+
+            if (!customAudioElement) {
+                document.getElementById('audioSourcePill').textContent = hasYt ? "YouTube Audio" : "Add YouTube Link";
+                document.getElementById('playbackStatusText').textContent = hasYt
+                    ? "Tap play to stream your YouTube song"
+                    : "Paste your YouTube link or tap play for soft melody";
+            }
+
             document.getElementById('songNoteDisplay').textContent = appData.songNote;
             document.getElementById('finalQuestionDisplay').textContent = appData.finalQuestion;
         }
@@ -799,8 +703,7 @@
 
             stage.addEventListener('touchend', (e) => {
                 if (!touchStartX || !e.changedTouches.length) return;
-                // Ignore horizontal swipe if user was scrolling the song bar or letter body
-                if (e.target.closest('#presetSongBar') || e.target.closest('#letterBodyContainer')) {
+                if (e.target.closest('#letterBodyContainer')) {
                     touchStartX = 0;
                     return;
                 }
@@ -908,39 +811,56 @@
         }
 
         // ==========================================
-        // 4. CARD 2: YOUTUBE PLAYER + SYNTH FALLBACK
+        // 4. CARD 2: USER YOUTUBE LINK + SYNTH FALLBACK
         // ==========================================
         let ytPlayer = null;
         let ytPlayerReady = false;
+        let ytApiLoaded = false;
         let audioCtx = null;
         let isPlaying = false;
         let melodyInterval = null;
         let noteIndex = 0;
 
-        const romanticNotes = [
-            { freq: 329.63, dur: 0.36 },
-            { freq: 392.00, dur: 0.36 },
-            { freq: 493.88, dur: 0.44 },
-            { freq: 440.00, dur: 0.36 },
-            { freq: 392.00, dur: 0.36 },
-            { freq: 329.63, dur: 0.85 },
-            { freq: 329.63, dur: 0.32 },
-            { freq: 392.00, dur: 0.32 },
-            { freq: 493.88, dur: 0.38 },
-            { freq: 587.33, dur: 0.42 },
-            { freq: 493.88, dur: 0.35 },
-            { freq: 440.00, dur: 0.40 },
-            { freq: 392.00, dur: 0.85 }
+        // Neutral gentle music-box arpeggio fallback if no YouTube link is entered
+        const gentleMusicBoxNotes = [
+            { freq: 261.63, dur: 0.42 }, // C4
+            { freq: 329.63, dur: 0.42 }, // E4
+            { freq: 392.00, dur: 0.42 }, // G4
+            { freq: 493.88, dur: 0.65 }, // B4
+            { freq: 440.00, dur: 0.42 }, // A4
+            { freq: 392.00, dur: 0.42 }, // G4
+            { freq: 329.63, dur: 0.75 }, // E4
+            { freq: 293.66, dur: 0.42 }, // D4
+            { freq: 349.23, dur: 0.42 }, // F4
+            { freq: 440.00, dur: 0.42 }, // A4
+            { freq: 392.00, dur: 0.85 }  // G4
         ];
 
         function onYouTubeIframeAPIReady() {
-            if (!window.YT || !window.YT.Player) return;
+            ytApiLoaded = true;
+            if (appData.youtubeId) {
+                initOrLoadYouTubePlayer(appData.youtubeId, false);
+            }
+        }
+
+        function initOrLoadYouTubePlayer(videoId, autoplay = false) {
+            if (!videoId || !ytApiLoaded || !window.YT || !window.YT.Player) return;
+
+            if (ytPlayer && ytPlayerReady) {
+                if (autoplay && typeof ytPlayer.loadVideoById === 'function') {
+                    ytPlayer.loadVideoById(videoId);
+                } else if (typeof ytPlayer.cueVideoById === 'function') {
+                    ytPlayer.cueVideoById(videoId);
+                }
+                return;
+            }
+
             ytPlayer = new YT.Player('ytPlayerHost', {
                 height: '1',
                 width: '1',
-                videoId: appData.youtubeId || presetSongs[0].youtubeId,
+                videoId: videoId,
                 playerVars: {
-                    autoplay: 0,
+                    autoplay: autoplay ? 1 : 0,
                     controls: 0,
                     rel: 0,
                     modestbranding: 1,
@@ -949,6 +869,9 @@
                 events: {
                     onReady: function () {
                         ytPlayerReady = true;
+                        if (autoplay && typeof ytPlayer.playVideo === 'function') {
+                            ytPlayer.playVideo();
+                        }
                     },
                     onStateChange: function (event) {
                         if (!window.YT || !window.YT.PlayerState) return;
@@ -965,7 +888,7 @@
                     },
                     onError: function () {
                         document.getElementById('audioSourcePill').textContent = "Music Box";
-                        document.getElementById('playbackStatusText').textContent = "Playing built-in music box melody ♪";
+                        document.getElementById('playbackStatusText').textContent = "YouTube link unavailable • Playing music box ♪";
                         if (isPlaying) {
                             playNextMelodyStep();
                         }
@@ -1038,13 +961,19 @@
                     customAudioElement.play().catch(() => {
                         playNextMelodyStep();
                     });
-                } else if (ytPlayer && ytPlayerReady && typeof ytPlayer.playVideo === 'function') {
+                } else if (appData.youtubeId) {
                     document.getElementById('audioSourcePill').textContent = "YouTube Audio";
                     document.getElementById('playbackStatusText').textContent = "Connecting to YouTube...";
-                    ytPlayer.playVideo();
+                    if (ytPlayer && ytPlayerReady && typeof ytPlayer.playVideo === 'function') {
+                        ytPlayer.playVideo();
+                    } else if (ytApiLoaded) {
+                        initOrLoadYouTubePlayer(appData.youtubeId, true);
+                    } else {
+                        playNextMelodyStep();
+                    }
                 } else {
                     document.getElementById('audioSourcePill').textContent = "Music Box";
-                    document.getElementById('playbackStatusText').textContent = "Playing built-in music box melody ♪";
+                    document.getElementById('playbackStatusText').textContent = "Playing gentle music box • Tap \"+ YouTube Link\" anytime";
                     playNextMelodyStep();
                 }
             } else {
@@ -1054,9 +983,9 @@
 
         function playNextMelodyStep() {
             if (!isPlaying || customAudioElement) return;
-            const currentNote = romanticNotes[noteIndex];
+            const currentNote = gentleMusicBoxNotes[noteIndex];
             playMusicBoxNote(currentNote.freq, currentNote.dur);
-            noteIndex = (noteIndex + 1) % romanticNotes.length;
+            noteIndex = (noteIndex + 1) % gentleMusicBoxNotes.length;
 
             melodyInterval = setTimeout(() => {
                 playNextMelodyStep();
@@ -1107,8 +1036,8 @@
             }
             customAudioName = "";
             document.getElementById('inputAudioFile').value = "";
-            document.getElementById('audioSourcePill').textContent = "YouTube Audio";
-            document.getElementById('audioUploadStatus').textContent = 'Streaming directly from YouTube.';
+            document.getElementById('audioSourcePill').textContent = appData.youtubeId ? "YouTube Audio" : "Add YouTube Link";
+            document.getElementById('audioUploadStatus').textContent = 'Plays your pasted YouTube link when set.';
             document.getElementById('clearAudioBtn').classList.add('hidden');
         }
 
@@ -1215,31 +1144,17 @@
         // ==========================================
         // 6. CUSTOMIZE STUDIO MODAL
         // ==========================================
-        function applyPresetSongFromSelect() {
-            const val = document.getElementById('presetSongSelect').value;
-            if (val === 'custom') return;
-            const song = presetSongs[Number(val)];
-            if (!song) return;
-            document.getElementById('inputYoutubeUrl').value = `https://www.youtube.com/watch?v=${song.youtubeId}`;
-            document.getElementById('inputSongTitle').value = song.songTitle;
-            document.getElementById('inputSongArtist').value = song.songArtist;
-            document.getElementById('inputSongNote').value = song.songNote;
-        }
-
         function openCustomizeModal(focusSection) {
             document.getElementById('inputRecipient').value = appData.recipient || "";
             document.getElementById('inputLetter').value = appData.letter;
             document.getElementById('inputSignOff').value = appData.signOff;
-            document.getElementById('inputSongTitle').value = appData.songTitle;
-            document.getElementById('inputSongArtist').value = appData.songArtist;
+            document.getElementById('inputSongTitle').value = appData.songTitle || "";
+            document.getElementById('inputSongArtist').value = appData.songArtist || "";
             document.getElementById('inputSongNote').value = appData.songNote;
             document.getElementById('inputFinalQuestion').value = appData.finalQuestion;
             document.getElementById('inputYoutubeUrl').value = appData.youtubeId
                 ? `https://www.youtube.com/watch?v=${appData.youtubeId}`
                 : "";
-
-            const matchedIdx = presetSongs.findIndex(s => s.youtubeId === appData.youtubeId);
-            document.getElementById('presetSongSelect').value = matchedIdx >= 0 ? String(matchedIdx) : 'custom';
 
             const modal = document.getElementById('customizeModal');
             modal.classList.remove('hidden');
@@ -1265,24 +1180,23 @@
             appData.recipient = document.getElementById('inputRecipient').value.trim();
             appData.letter = document.getElementById('inputLetter').value.trim() || defaultData.letter;
             appData.signOff = document.getElementById('inputSignOff').value.trim() || defaultData.signOff;
-            appData.songTitle = document.getElementById('inputSongTitle').value.trim() || defaultData.songTitle;
-            appData.songArtist = document.getElementById('inputSongArtist').value.trim() || defaultData.songArtist;
+            appData.songTitle = document.getElementById('inputSongTitle').value.trim();
+            appData.songArtist = document.getElementById('inputSongArtist').value.trim();
             appData.songNote = document.getElementById('inputSongNote').value.trim() || defaultData.songNote;
             appData.finalQuestion = document.getElementById('inputFinalQuestion').value.trim() || defaultData.finalQuestion;
-            appData.youtubeId = parsedYtId || defaultData.youtubeId;
+            appData.youtubeId = parsedYtId;
 
             try {
-                localStorage.setItem('loveAppCustomData_v3', JSON.stringify(appData));
+                localStorage.setItem('loveAppCustomData_v4', JSON.stringify(appData));
             } catch (e) {}
 
             if (appData.youtubeId !== previousYtId) {
                 stopMusicVisualsAndTimer(false);
-                if (ytPlayer && ytPlayerReady && typeof ytPlayer.cueVideoById === 'function') {
-                    ytPlayer.cueVideoById(appData.youtubeId);
+                if (appData.youtubeId) {
+                    initOrLoadYouTubePlayer(appData.youtubeId, false);
                 }
             }
 
-            renderPresetSongButtons();
             applyDataToUI();
             closeCustomizeModal();
             spawnBurstOfHearts(5);
@@ -1291,13 +1205,10 @@
         function resetToDefaults() {
             appData = { ...defaultData };
             clearCustomAudio();
+            stopMusicVisualsAndTimer(false);
             try {
-                localStorage.removeItem('loveAppCustomData_v3');
+                localStorage.removeItem('loveAppCustomData_v4');
             } catch (e) {}
-            if (ytPlayer && ytPlayerReady && typeof ytPlayer.cueVideoById === 'function') {
-                ytPlayer.cueVideoById(appData.youtubeId);
-            }
-            renderPresetSongButtons();
             openCustomizeModal();
             applyDataToUI();
         }
